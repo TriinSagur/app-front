@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import CustomerInfoView from "@/views/CustomerInfoView";
+import BookInfoView from "@/views/BookInfoView";
+import AuthorInfoView from "@/views/AuthorInfoView";
 
 Vue.use(VueRouter)
 
@@ -25,7 +27,17 @@ const routes = [
     path: '/customer',
     name: 'customerRoute',
     component: CustomerInfoView
-    }
+    },
+  {
+    path: '/book',
+    name: 'bookRoute',
+    component: BookInfoView
+  },
+  {
+    path: '/author',
+    name: 'authorRoute',
+    component: AuthorInfoView
+  }
 
 ]
 

@@ -1,26 +1,50 @@
 <template>
 
-  <div class="customer">
-    <input placeholder="nimi" v-model="firstName"></input>
-    <br>
-    Tere maailm
+  <div>
+    <input placeholder="kliendi andmebaasi ID" v-model="customerId">
     <br>
     <br>
-    <button v-on:click="findCustomerById">Leia customer ID-ga 1</button>
+    <table>
+      <tr>
+        <td>Veerg1</td>
+        <td>Veerg 2</td>
+      </tr>      <tr>
+        <td>rida 1</td>
+        <td>rida 1</td>
+      </tr>
+    </table>
+
+    <button v-on:click="findCustomerById">Leia customer ID järgi</button>
     <br>
     <br>
-    {{greetMessage}}
+   eesnimi: {{customer.firstName}}
+    <br>
+    perekonnanimi: {{customer.lastName}}
+    <br>
+    isikukood: {{customer.isikukood}}
+    <br>
+    <br>
+    <br>
+
+<!--    {-->
+<!--    "id": 1,-->
+<!--    "firstName": "Otto",-->
+<!--    "lastName": "Triin",-->
+<!--    "isikukood": "40000000001"-->
+<!--    }-->
+
   </div>
 
 </template>
 
 <script>
 export default {
-  name: "CustomerInfo",
+
+  name: 'CustomerInfo',
   data: function () {
     return {
-      firstName: "",
-      greetMessage: ""
+      customerId: 0,
+      customer: {}
     }
   },
   methods: {
@@ -28,17 +52,19 @@ export default {
 
       this.$http.get('/customer/id', {
         params: {
-          id: 1
+          id: this.customerId
         }
       }).then(response => {
-        console.log(response)
+        this.customer = response.data
+        console.log(response.data)
+
+
       }).catch( error => console.log(error))
+    },
 
-    }
-  }
+
+  },
+
 }
+
 </script>
-
-<style scoped>
-
-</style>
