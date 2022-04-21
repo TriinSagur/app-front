@@ -21,29 +21,25 @@ const routes = [
         component: CustomerInfoView
     },
     {
-        path: '/new-customer',
-        name: 'newCustomerRoute',
-        component: NewCustomerView
-    },
-
-    {
         path: '/account-info',
         name: 'accountRoute',
         component: AccountInfoView
     },
-
+    {
+        path: '/new-customer',
+        name: 'newCustomerRoute',
+        component: NewCustomerView
+    },
     {
         path: '/input',
         name: 'inputRoute',
         component: InputPageView
     },
-
     {
         path: '/output',
         name: 'outputRoute',
         component: OutputPageView
     },
-
     {
         path: '/about',
         name: 'aboutRoute',
