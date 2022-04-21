@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import customerInfo from "@/views/CustomerInfoView";
 import customerInfoView from "@/views/CustomerInfoView";
+import NewCustomerView from "@/views/NewCustomerView";
+
 
 Vue.use(VueRouter)
 
@@ -13,6 +14,16 @@ const routes = [
     component: HomeView
   },
   {
+    path: '/customer',
+    name: 'customerRoute',
+    component: customerInfoView
+  },
+  {
+    path: '/new-customer',
+    name: 'newCustomerRoute',
+    component: NewCustomerView
+  },
+  {
     path: '/about',
     name: 'aboutRoute',
     // route level code-splitting
@@ -21,11 +32,6 @@ const routes = [
     component: function () {
       return import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
     }
-  },
-  {
-    path:'/customer',
-    name: 'customerRoute',
-    component: customerInfoView
   }
 ]
 
