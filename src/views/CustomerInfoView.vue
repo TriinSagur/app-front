@@ -1,48 +1,40 @@
 <template>
+
   <div>
-
-    <input placeholder="nimi"  v-model="firstName">
-    <br>
-    <br>
-
-    <button v-on:click="findCustomerById">Leia customer ID'ga 1</button>
-
-    <br>
-    <br>
-    {{ greetMessage }}
+    <input placeholder="kliendi andmebaasi ID" v-model="customerId">
 
   </div>
+
+
 </template>
 
 <script>
 export default {
 
-  name: "CustomerInfo",
+  name: 'CustomerInfo',
   data: function () {
     return {
-      firstName: "",
-      greetMessage: ""
+      customerId: 0,
+      customer: {}
     }
   },
   methods: {
-    findCustomerById: function(){
+    findCustomerById: function () {
 
-      this.$http.get('/customer/id',{
+      this.$http.get('/customer/id', {
         params: {
-          id:1
+          id: this.customerId
         }
-      }) .then(response => {
+      }).then(response => {
+        this.customer = response.data
         console.log(response.data)
-      }).catch(error=> console.log(error))
-    }
 
+
+      }).catch( error => console.log(error))
+    }
 
 
   }
 }
 
 </script>
-
-<style scoped>
-
-</style>
