@@ -1,23 +1,37 @@
 <template>
-<div>
-  <input placeholder="kliendi andmebaasi ID" v-model="customerId">
+  <div>
 
+    <button v-on:click="hideTableDiv" type="button" class="btn btn-danger">Peida</button>
 
+    <button v-on:click="hideTableDiv2" type="button" class="btn btn-success m-5">Naita</button>
 
-  <br>
-  <br>
+    <br>
+    <br>
 
-  <button v-on:click="findCustomerById">Leia customer ID-ga 1</button>
+    <div v-if="tableDivDisplay">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Eesnimi</th>
+          <th scope="col">Perekonnanimi</th>
+          <th scope="col">Isikukood</th>
+        </tr>
+        </thead>
+        <tbody>
 
-  <br>
-  <br>
- eesnimi: {{customer.firstName}}
-  <br>
-  perekonnanimi: {{customer.lastName}}
-  <br>
-  isikukood: {{customer.isikukood}}
+        <tr v-for="customer in customers">
+          <th scope="row">*</th>
+          <td>{{ customer.firstName }}</td>
+          <td>{{ customer.lastName }}</td>
+          <td>{{ customer.isikukood }}</td>
+        </tr>
+        </tbody>
 
-</div>
+      </table>
+    </div>
+
+  </div>
 
 
 </template>
@@ -31,24 +45,53 @@ export default {
     return {
 
       customerId: 0,
-      customer: {}
+      customer: {},
+      customers: {},
+      tableDivDisplay: true
     }
   },
   methods: {
+
+    hideTableDiv: function () {
+
+      this.tableDivDisplay = false
+
+    },
+    hideTableDiv2: function () {
+
+      this.tableDivDisplay = true
+
+    },
+
+    getAllCustomers: function () {
+
+      this.$http.get('/customer/all')
+
+          .then(response => {
+            this.customers = response.data
+            console.log(response.data)
+          })
+          .catch(error => console.log(error))
+    },
+
     findCustomerById: function () {
 
       this.$http.get('customer/id', {
         params: {
           id: this.customerId
         }
-      } ).then(response => {
+      }).then(response => {
         this.customer = response.data
         console.log(response.data)
       }).catch(error => console.log(error))
     }
 
-    }
+  },
+  mounted() {
+    this.getAllCustomers()
+
   }
+}
 
 </script>
 
