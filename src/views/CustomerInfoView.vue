@@ -1,6 +1,16 @@
 <template>
 
   <div>
+
+    <button>
+
+
+    </button>
+
+
+    <br>
+    <br>
+
 <!--    <input placeholder="kliendi andmebaasi ID" v-model="customerId">-->
     <table>
       <tr>
