@@ -5,6 +5,7 @@ import CustomerInfoView from "@/views/CustomerInfoView";
 import BookInfoView from "@/views/BookInfoView";
 import AuthorInfoView from "@/views/AuthorInfoView";
 import NewCustomerView from "@/views/NewCustomerView";
+import RemoveCustomerView from "@/views/RemoveCustomerView";
 
 Vue.use(VueRouter)
 
@@ -43,6 +44,11 @@ const routes = [
     path: '/new-customer',
     name: 'newCustomerRoute',
     component: NewCustomerView
+  },
+  {
+    path: '/remove-customer',
+    name: 'removeCustomerRoute',
+    component: RemoveCustomerView
   }
 
 ]
