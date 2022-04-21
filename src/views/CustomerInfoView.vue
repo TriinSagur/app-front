@@ -8,6 +8,8 @@
 
     <div v-if="tableDivDisplay">
 
+
+
       <table class="table table-hover">
 
         <thead>
@@ -50,6 +52,8 @@ export default {
     }
   },
   methods: {
+
+
 
     displayTableDiv: function () {
       this.tableDivDisplay = true;
