@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import customerInfoView from "@/views/CustomerInfoView";
 import NewCustomerView from "@/views/NewCustomerView";
+import AccountInfoView from "@/views/AccountInfoView";
 
 
 Vue.use(VueRouter)
@@ -22,6 +23,11 @@ const routes = [
     path: '/new-customer',
     name: 'newCustomerRoute',
     component: NewCustomerView
+  },
+  {
+    path: '/account-info',
+    name: 'accountRoute',
+    component: AccountInfoView
   },
   {
     path: '/about',

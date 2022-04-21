@@ -16,6 +16,7 @@
           <th scope="col">Eesnimi</th>
           <th scope="col">Perekonnanimi</th>
           <th scope="col">Isikukood</th>
+          <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -25,6 +26,7 @@
           <td>{{ customer.firstName }}</td>
           <td>{{ customer.lastName }}</td>
           <td>{{ customer.isikukood }}</td>
+          <td><button v-on:click="navigateToAccountsInfo(customer.id)" type="button" class="btn btn-secondary btn-lg">Konto</button></td>
         </tr>
         </tbody>
 
@@ -53,29 +55,21 @@ export default {
   methods: {
 
     hideTableDiv: function () {
-
       this.tableDivDisplay = false
-
     },
     hideTableDiv2: function () {
-
       this.tableDivDisplay = true
-
     },
 
     getAllCustomers: function () {
-
       this.$http.get('/customer/all')
-
           .then(response => {
             this.customers = response.data
             console.log(response.data)
           })
           .catch(error => console.log(error))
     },
-
     findCustomerById: function () {
-
       this.$http.get('customer/id', {
         params: {
           id: this.customerId
@@ -84,7 +78,11 @@ export default {
         this.customer = response.data
         console.log(response.data)
       }).catch(error => console.log(error))
-    }
+    },
+    navigateToAccountsInfo: function (customerId) {
+      console.log('see on customer id' + customerId)
+      this.$router.push({name: 'accountRoute', query: {id: customerId} })
+    },
 
   },
   mounted() {
