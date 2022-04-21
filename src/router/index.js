@@ -4,6 +4,8 @@ import HomeView from '../views/HomeView.vue'
 import customerInfoView from "@/views/CustomerInfoView";
 import NewCustomerView from "@/views/NewCustomerView";
 import AccountInfoView from "@/views/AccountInfoView";
+import InputPageView from "@/views/InputPageView";
+import OutputPageView from "@/views/OutputPageView";
 
 
 Vue.use(VueRouter)
@@ -29,6 +31,17 @@ const routes = [
     name: 'accountRoute',
     component: AccountInfoView
   },
+  {
+    path: '/input',
+    name: 'inputRoute',
+    component: InputPageView
+  },
+  {
+    path: '/output',
+    name: 'outputRoute',
+    component: OutputPageView
+  },
+
   {
     path: '/about',
     name: 'aboutRoute',
