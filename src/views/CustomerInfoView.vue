@@ -1,16 +1,11 @@
 <template>
 
   <div>
-    <input placeholder="nimi" v-model="firstName">
+
+    <input placeholder="kliendi andmebaasi ID" v-model="customerId">
     <br>
     <br>
 
-
-
-    <button v-on:click="greetingWithName('Otto Triin')">Tervituse nupp</button>
-    <br>
-    <br>
-    {{ greetMessage }}
   </div>
 </template>
 
@@ -18,21 +13,26 @@
 <script>
 export default {
 
-  name: "CustomerInfo",
+  name: 'CustomerInfo',
   data: function () {
     return {
-      firstName: "",
-      greetMessage: ""
+      customerId: 0,
+      customer: {}
     }
   },
   methods: {
-    greeting: function () {
-      this.greetMessage = "Tere Triin"
-    },
 
-    greetingWithName: function (firstName) {
-      this.firstName =firstName;
-      this.greetMessage = 'Tere ' + firstName
+    findCustomerById: function () {
+
+      this.$http.get('/customer/id', {
+        params:{
+          id: this.customerId
+        }
+      }).then(response => {
+        this.customer = response.ata
+        console.log(response.data)
+
+      }).catch( error=> console.log(error))
 
     }
 
