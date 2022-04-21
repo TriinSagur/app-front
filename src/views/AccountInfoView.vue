@@ -1,0 +1,50 @@
+<template>
+  <div>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th scope="col">Konto number</th>
+        <th scope="col">Kontojääk</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="account in accounts">
+        <td >{{ account.accountNumber }}</td>
+        <td>{{ account.balance }}</td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "AccountInfoView",
+  data: function () {
+    return {
+      accounts: {}
+    }
+  },
+  methods: {
+    findAccountsInfoByCustomerId: function (id) {
+      this.$http.get('/account/customer-id', {
+        params: {
+          id: id
+        }
+      })
+          .then(response => {
+            this.accounts = response.data
+          })
+          .catch(error => console.log(error.response.data))
+    }
+  },
+  mounted() {
+    this.findAccountsInfoByCustomerId(1)
+  }
+}
+</script>
+
+<style scoped>
+
+</style>
