@@ -1,48 +1,104 @@
 <template>
+
   <div>
-    <input placeholder="kliendi andmebaasi ID" v-model="customerId">
+    <button v-on:click="hideTableDiv" type="button" class="btn btn-outline-danger">Peida</button>
+    <button v-on:click="displayTableDiv" type="button" class="btn btn-outline-success m-3">Näita</button>
+    <br>
+    <br>
 
-    <br>
+    <div v-if="tableDivDisplay">
 
-<button v-on:click="findCustomerById" >Leia Customer Id järgi</button>
-    <br>
-    <br>
-  eesnimi:  {{customer.firstName}}
-    <br>
-    perekonnanimi:   {{customer.lastName}}
-    <br>
-    isikukood:   {{customer.isikukood}}
-    <br>
+      <table class="table table-hover">
+
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Eesnimi</th>
+          <th scope="col">Perekonnanimi</th>
+          <th scope="col">Isikukood</th>
+          <th scope="col">Kontod</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr v-for="customer in customers">
+          <th scope="row">*</th>
+          <td>{{ customer.firstName }}</td>
+          <td>{{ customer.lastName }}</td>
+          <td>{{ customer.isikukood }}</td>
+          <td>
+            <button v-on:click="navigateToAccountsInfo(customer.id)" type="button" class="btn btn-outline-dark">Dark</button>
+          </td>
+        </tr>
+        </tbody>
+
+      </table>
+    </div>
+
 
   </div>
+
+
 </template>
 
 <script>
 export default {
-  name: "CustomerInfo",
 
+  name: 'CustomerInfo',
   data: function () {
     return {
-      customerId: 0,
-      customer: {}
-
+      customerId: null,
+      customer: {},
+      customers: {},
+      tableDivDisplay: true
     }
   },
-
   methods: {
-    findCustomerById: function () {
-      this.$http.get('/customer/id',{
-        params: {
-          id: this.customerId,
-        }
-      }).then(response => {
-        this.customer = response.data
-        console.log(response.data.firstName)
-      }).catch(error => console.log(error))
+
+    displayTableDiv: function () {
+      this.tableDivDisplay = true;
+    },
+
+    hideTableDiv: function () {
+      this.tableDivDisplay = false;
+    },
+
+    getAllCustomers: function () {
+      this.$http.get('/customer/all')
+          .then(response => {
+            this.customers = response.data
+            console.log(response.data)
+          })
+          .catch(error => console.log(error))
+    },
+    navigateToAccountsInfo: function (customerId) {
+      console.log('see on customer id ' + customerId)
+      this.$router.push({name:'accountRoute',query: {id:customerId}})
     }
 
+    ,
+    findCustomerById: function () {
+
+      this.$http.get('/customer/id', {
+        params: {
+          id: this.customerId
+        }
+      })
+          .then(response => {
+            this.customer = response.data
+            console.log(response.data)
+
+
+          })
+          .catch(error => console.log(error))
+    }
+
+
   }
-
+  ,
+  mounted() {
+    this.getAllCustomers()
+  }
 }
-</script>
 
+</script>
