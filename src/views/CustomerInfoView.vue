@@ -16,6 +16,7 @@
           <th scope="col">Eesnimi</th>
           <th scope="col">Perekonnanimi</th>
           <th scope="col">Isikukood</th>
+          <th scope="col"></th>
         </tr>
         </thead>
 
@@ -25,6 +26,9 @@
           <td>{{ customer.firstName }}</td>
           <td>{{ customer.lastName }}</td>
           <td>{{ customer.isikukood }}</td>
+          <td>
+            <button type="button" class="btn btn-outline-dark" v-on:click="navigateToAccountsInfo(customer.id)">Dark</button>
+          </td>
         </tr>
         </tbody>
 
@@ -66,6 +70,11 @@ export default {
             console.log(response.data)
           })
           .catch(error => console.log(error))
+    },
+
+    navigateToAccountsInfo: function (customerId) {
+      console.log('Seeon customerid ' + customerId)
+      this.$router.push({name: 'accountRoute', query: {id: customerId}})
     },
 
 

@@ -23,7 +23,8 @@ export default {
   name: "AccountInfoView",
   data: function () {
     return {
-      accounts: {}
+      accounts: {},
+      customerId: this.$route.query.id
     }
   },
   methods: {
@@ -40,7 +41,7 @@ export default {
     }
   },
   mounted() {
-    this.findAccountsInfoByCustomerId(1)
+    this.findAccountsInfoByCustomerId(this.customerId)
   }
 }
 </script>
