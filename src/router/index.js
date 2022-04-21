@@ -15,7 +15,7 @@ const routes = [
     },
     {
         path: '/new-customer',
-        name: '/newCustomerRoute',
+        name: 'newCustomerRoute',
         component: NewCustomerView
     },
     {

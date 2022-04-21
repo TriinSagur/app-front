@@ -1,6 +1,22 @@
 <template>
   <div>
+    <table class="table table-hover">
 
+      <thead>
+      <tr>
+        <th scope="col">Kontonumber</th>
+        <th scope="col">Kontojääk</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr v-for="account in accounts">
+        <th>{{ account.accountNumber }}</th>
+        <td>{{ account.balance }}</td>
+      </tr>
+      </tbody>
+
+    </table>
   </div>
 </template>
 
@@ -9,7 +25,8 @@ export default {
   name: 'AccountInfoView',
   data: function () {
     return {
-      accounts: {}
+      accounts: {},
+      customerId: this.$route.query.id
     }
   },
   methods: {
@@ -26,7 +43,7 @@ export default {
     }
   },
   mounted() {
-    this.findAccountsInfoByCustomerId(1)
+    this.findAccountsInfoByCustomerId(this.customerId)
   }
 }
 </script>
