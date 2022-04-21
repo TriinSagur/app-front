@@ -4,6 +4,7 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/customer">Customer Info</router-link> |
       <router-link to="/new-customer">Add Customers</router-link> |
+      <router-link to="/account-info">Account info</router-link> |
       <router-link to="/about">About</router-link>
     </nav>
     <router-view/>
@@ -16,7 +17,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #1d2b69;
+  color: #07080a;
+  background-color: bisque;
 }
 
 nav {

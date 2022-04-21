@@ -8,21 +8,27 @@
 
     <div v-if="tableDivDisplay">
 
-      <table class="table table-hover">
+      <table class="table table-hover table-bordered table-striped ">
 
         <thead>
-        <tr>
+        <tr class="table-hover table-active">
           <th scope="col">Eesnimi</th>
           <th scope="col">Perekonnanimi</th>
           <th scope="col">Isikukood</th>
+          <th scope="col"></th>
         </tr>
         </thead>
 
         <tbody>
-        <tr v-for="customer in customers">
+        <tr class="table-hover table-success" v-for="customer in customers">
           <td>{{ customer.firstName }}</td>
           <td>{{ customer.lastName }}</td>
           <td>{{ customer.isikukood }}</td>
+          <td>
+            <button type="button" class="btn btn-secondary" v-on:click="navigateToAccountsInfo(customer.id)">Vali
+              konto
+            </button>
+          </td>
         </tr>
         </tbody>
       </table>
@@ -46,11 +52,11 @@ export default {
   },
   methods: {
 
-    hideTableDiv : function () {
+    hideTableDiv: function () {
       this.tableDivDisplay = false;
     },
 
-    displayTableDiv : function () {
+    displayTableDiv: function () {
       this.tableDivDisplay = true;
     },
 
@@ -63,6 +69,11 @@ export default {
           .catch(error => console.log(error))
 
     },
+    navigateToAccountsInfo: function (customerId) {
+      console.log('see on customer id ' + customerId)
+      this.$router.push({name: 'accountRoute', query: {id: customerId}})  //liigume teise aknasse netilehel
+    }
+    ,
 
     findCustomerById: function () {
       this.$http.get('/customer/id', {params: {id: this.customerId}})
