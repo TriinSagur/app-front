@@ -33,7 +33,9 @@ export default {
         params: {
           id: this.customerId
         }
-      })
+      }).then(
+          response => alert(Success)
+      )
 
           .catch(error => {
 

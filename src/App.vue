@@ -12,7 +12,8 @@
       <router-link to="/account-info">Account info</router-link> |
       <router-link to="/update-customer">Update Customer</router-link> |
       <router-link to="/input">Input</router-link> |
-      <router-link to="/output">Output</router-link>
+      <router-link to="/output">Output</router-link> |
+      <router-link to="/transaction">Transactions</router-link>
 
     </nav>
     <router-view/>
