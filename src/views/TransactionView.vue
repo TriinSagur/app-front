@@ -1,6 +1,17 @@
 <template>
   <div>
-    <AccountInfoTable :accounts="accounts"/>
+    <h1>Pangatoimingud</h1>
+    <h4>Vali konto</h4>
+
+    <section>
+      <ul class = "list-group">
+        <li class ="list-group-item"><input type="radio" v-model="color" value="0">EE123</li>
+        <li class ="list-group-item"><input type="radio" v-model="color" value="1">EE234</li>
+      </ul>
+      <br/>
+      <span >value: {{ color }}</span>
+    </section>
+
   </div>
 </template>
 
@@ -8,12 +19,14 @@
 import AccountInfoTable from "@/components/AccountInfoTable";
 
 export default {
-  name: "AccountInfoView",
+  name: "TransactionView",
   components: {AccountInfoTable},
   data: function () {
     return {
       accounts: {},
-      customerId: this.$route.query.id
+      customerId: this.$route.query.id,
+      picked: null,
+      color: null
     }
   },
   methods: {
@@ -30,8 +43,11 @@ export default {
     }
   },
   mounted() {
-    this.findAccountsInfoByCustomerId(this.customerId)
+    this.findAccountsInfoByCustomerId(1)
   }
 }
 </script>
 
+<style scoped>
+
+</style>
