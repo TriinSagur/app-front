@@ -6,11 +6,14 @@
         <h3>vali konto</h3>
         <ul class="list-group">
           <li class="list-group-item" v-for="account in accounts">
-            <input type="radio" v-model="accountId" :value="account.accountId">{{ account.accountNumber }}
+            <input v-on:click="getStatementByAccountId" type="radio" v-model="accountId" :value="account.accountId">{{ account.accountNumber }}
             €{{ account.balance }}
           </li>
         </ul>
       </section>
+
+
+
     </div>
 
 
@@ -39,10 +42,23 @@ export default {
       })
           .then(response => {
             this.accounts = response.data
+            this.accountId = this.accounts[0].accountId
           })
           .catch(error => console.log(error.response.data))
     },
-    vhttp
+    getStatementByAccountId: function () {
+      this.$http.get("/statement/account-id", {
+            params: {
+              accountId: this.accountId
+
+            }
+          }
+      ).then(response => {
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
+    }
   },
 
   mounted() {

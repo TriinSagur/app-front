@@ -38,7 +38,7 @@ const routes = [
     },
     {
         path: '/output',
-        name: 'inputRoute',
+        name: 'outRoute',
         component: OutputPageView
     },
     {
