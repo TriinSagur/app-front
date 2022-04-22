@@ -2,6 +2,7 @@
   <div id="app">
     <nav>
       <router-link to="/">Home</router-link> |
+      <router-link to="/transaction">Transactions</router-link> |
       <router-link to="/customer">Customer info</router-link> |
       <router-link to="/new-customer">Add Customers</router-link> |
       <router-link to="/account-info">Account Info</router-link> |

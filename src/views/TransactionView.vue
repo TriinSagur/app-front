@@ -1,25 +1,39 @@
 <template>
 
   <div>
-
-    <AccountInfoTable :accounts="accounts"/>
-
+    <h1>Pangatoimingud</h1>
     <br>
-    <br>
+
+
+    <section>
+      <h3>Vali konto</h3>
+
+    <ul class="list-group">
+      <li class="list-group-item" v-for="account in accounts"> <input type="radio" v-model="accountId" :value="account.accountId">{{ account.accountNumber}} EUR {{account.balance}}</li>
+
+    </ul>
+
+    <br />
+    <span>choosen account ID: {{ accountId }}</span>
+    </section>
+
+
 
   </div>
 </template>
 
 <script>
+
 import AccountInfoTable from "@/components/AccountInfoTable";
 
 export default {
-  name: "AccountInfoView",
+  name: "TransactionInfoView",
   components: {AccountInfoTable},
   data: function () {
     return {
       accounts: {},
-      customerId: this.$route.query.id
+      customerId: this.$route.query.id,
+      accountId: null
     }
   },
   methods: {
@@ -37,10 +51,11 @@ export default {
     },
   },
   mounted() {
-    this.findAccountsInfoByCustomerId(this.customerId);
+    this.findAccountsInfoByCustomerId(1);
   }
 }
-
 </script>
 
+<style scoped>
 
+</style>
