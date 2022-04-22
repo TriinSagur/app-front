@@ -1,34 +1,37 @@
 <template>
   <div>
+    <button v-on:click="hideTableDiv" type="button" class="btn btn-outline-danger">Peida</button>
+    <button v-on:click="displayTableDiv" type="button" class="btn btn-outline-success m-3">Näita</button>
+    <br>
+    <br>
 
-    <input placeholder="kliendi andmebaasi ID" v-model="customerId">
-    <br>
-    <br>
-    <table>
-      <tr>
-        <td>Veerg1</td>
-        <td>Veerg 2</td>
-      </tr>      <tr>
-        <td>rida 1</td>
-        <td>rida 1</td>
-      </tr>
-    </table>
+    <div v-if="tableDivDisplay">
 
-    <button v-on:click="findCustomerById">Leia customer ID järgi</button>
-    <br>
-    <br>
-   eesnimi: {{customer.firstName}}
-    <br>
-    perekonnanimi: {{customer.lastName}}
-    <br>
-    isikukood: {{customer.isikukood}}
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Eesnimi</th>
+          <th scope="col">Perekonnanimi</th>
+          <th scope="col">Isikukood</th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
 
-<!--    {-->
-<!--    "id": 1,-->
-<!--    "firstName": "Otto",-->
-<!--    "lastName": "Triin",-->
-<!--    "isikukood": "40000000001"-->
-<!--    }-->
+        <tbody>
+        <tr v-for="customer in customers">
+          <th scope="col">*</th>
+          <td>{{ customer.firstName }}</td>
+          <td>{{ customer.lastName }}</td>
+          <td>{{ customer.isikukood }}</td>
+          <td><button type="button" class="btn btn-outline-dark" v-on:click="navigateToAccountsInfo(customer.id)">Info</button></td>
+
+        </tr>
+
+        </tbody>
+
+      </table>
+    </div>
 
   </div>
 
@@ -43,45 +46,55 @@ export default {
   data: function () {
     return {
       customerId: 0,
-      customer: {}
+      customer: {},
+      customers: {},
+      tableDivDisplay: true
     }
   },
   methods: {
+
+    hideTableDiv: function () {
+      this.tableDivDisplay =false
+    },
+
+    displayTableDiv: function () {
+      this.tableDivDisplay =true
+    },
+
+    getAllCustomers: function () {
+      this.$http.get('/customer/all')
+          .then(response => {
+            this.customers = response.data
+            console.log(response.data)
+          })
+          .catch(error => console.log(error))
+    },
+
+    navigateToAccountsInfo: function (customerId) {
+      console.log('see on customer id' + customerId)
+      this.$router.push({name: 'accountRoute', query: {id: customerId}}) //kuidas saab liikuda linkide vahel
+    },
+
+
     findCustomerById: function () {
 
       this.$http.get('/customer/id', {
         params: {
           id: this.customerId
         }
-      }).then(response => {
-        this.customer = response.data
-        console.log(response.data)
+      })
+          .then(response => {
+            this.customer = response.data
+            console.log(response.data)
 
 
-      }).catch( error => console.log(error))
+          }).catch(error => console.log(error))
     }
 
-
-
-
-
-
-
-
-
-    // greeting: function () {
-    //   this.greetMessage = "Tere "
-    // },
-    //
-    // greetingWithName: function (firstName) {
-    //   console.log("Me oleme siin")
-    //   this.greeting()
-    //   this.firstName =firstName;
-    //   this.greetMessage += this.firstName
-    //
-    // }
-
-
+  },
+  mounted() {
+    this.getAllCustomers()
   }
+
 }
 </script>
