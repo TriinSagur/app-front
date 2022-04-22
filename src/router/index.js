@@ -7,6 +7,7 @@ import AccountInfoView from "@/views/AccountInfoView";
 import InputPage from "@/views/InputPageView";
 import InputPageView from "@/views/InputPageView";
 import OutputPageView from "@/views/OutputPageView";
+import TransactionView from "@/views/TransactionView";
 
 Vue.use(VueRouter)
 
@@ -40,6 +41,11 @@ const routes = [
     path: '/output',
     name: 'outputRoute',
     component: OutputPageView
+  },
+  {
+    path: '/transaction',
+    name: 'transactionRoute',
+    component: TransactionView
   },
   {
     path: '/about',
