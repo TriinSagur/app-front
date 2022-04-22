@@ -1,16 +1,17 @@
 <template>
   <div>
     <h1>Pangatoimingud</h1>
-
-    <section>
-      <h3>vali konto</h3>
-      <ul class="list-group">
-        <li class="list-group-item" v-for="account in accounts"><input type="radio" v-model="accountId" :value="account.accountId">{{account.accountNumber}} €{{account.balance}}</li>
-      </ul>
-
-      <br />
-      <span>chosen account id: {{ accountId }}</span>
-    </section>
+    <div>
+      <section>
+        <h3>vali konto</h3>
+        <ul class="list-group">
+          <li class="list-group-item" v-for="account in accounts">
+            <input type="radio" v-model="accountId" :value="account.accountId">{{ account.accountNumber }}
+            €{{ account.balance }}
+          </li>
+        </ul>
+      </section>
+    </div>
 
 
   </div>
@@ -40,8 +41,10 @@ export default {
             this.accounts = response.data
           })
           .catch(error => console.log(error.response.data))
-    }
+    },
+    vhttp
   },
+
   mounted() {
     this.findAccountsInfoByCustomerId(1)
   }
