@@ -7,6 +7,7 @@
       <router-link to="/account-info">Account Info</router-link> |
       <router-link to="/input">input</router-link> |
       <router-link to="/output">output</router-link> |
+      <router-link to="/transaction">transaction</router-link> |
       <router-link to="/about">About</router-link>
     </nav>
     <router-view/>
