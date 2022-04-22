@@ -1,14 +1,19 @@
 <template>
   <div>
     <h1>Pangatoimingud</h1>
-    <h4>Vali konto</h4>
-    <input type="radio" id="one" value="One" v-model="picked">
-    <label for="one">One</label>
-    <br>
-    <input type="radio" id="two" value="Two" v-model="picked">
-    <label for="two">Two</label>
-    <br>
-    <span>Picked: {{ picked }}</span>
+
+    <section>
+      <h3>vali konto</h3>
+      <ul class="list-group">
+        <li class="list-group-item" v-for="account in accounts"><input type="radio" v-model="accountId" :value= "account.accountId" >{{account.accountNumber}}  {{account.balance}}</li>
+
+      </ul>
+
+      <br />
+      <span>value: {{ accountId }}</span>
+    </section>
+
+
   </div>
 </template>
 
@@ -22,7 +27,7 @@ export default {
     return {
       accounts: {},
       customerId: this.$route.query.id,
-      picked: null
+      accountId: null
     }
   }, methods: {
     findAccountsInfoByCustomerId: function (id) {
