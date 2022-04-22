@@ -2,6 +2,12 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import CustomerInfoView from "@/views/CustomerInfoView";
+import NewCustomerView from "@/views/NewCustomerView";
+import AccountInfoView from "@/views/AccountInfoView";
+import InputPageView from "@/views/InputPageView";
+import OutputPageView from "@/views/OutputPageView";
+import TransactionView from "@/views/TransactionView";
+
 
 Vue.use(VueRouter)
 
@@ -12,11 +18,43 @@ const routes = [
         component: HomeView
     },
     {
+        path: '/new-customer',
+        name: 'newCustomerRoute',
+        component: NewCustomerView
+    },
+    {
         path: '/customer',
         name: 'customerRoute',
         component: CustomerInfoView
     },
+
     {
+        path: '/account-info',
+        name: 'accountRoute',
+        component: AccountInfoView
+    },
+
+    {
+        path: '/input',
+        name: 'inputRoute',
+        component: InputPageView
+    },
+
+    {
+        path: `/output`,
+        name: 'outputRoute',
+        component: OutputPageView
+    },
+
+    {
+        path: `/transaction`,
+        name: 'transactionRoute',
+        component: TransactionView
+    },
+
+    {
+
+
         path: '/about',
         name: 'aboutRoute',
         // route level code-splitting
