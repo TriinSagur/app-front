@@ -11,23 +11,20 @@
     <br>
     <br>
     <button type="submit" v-on:click="addNewCustomer">Lisa uus klient</button>
-
-
   </div>
+
 </template>
 
 <script>
 export default {
-  name: "NewCustomerView",
+  name: 'NewCustomerView',
   data: function () {
     return {
       customer: {}
-
     }
   },
   methods: {
     addNewCustomer: function () {
-
       this.$http.post('/customer', this.customer)
           .then(response => {
             this.customer.id = response.data.id

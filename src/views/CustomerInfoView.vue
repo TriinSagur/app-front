@@ -73,7 +73,7 @@ export default {
     },
 
     navigateToAccountsInfo: function (customerId) {
-      console.log('Seeon customerid ' + customerId)
+      console.log('See on customerid ' + customerId)
       this.$router.push({name: 'accountRoute', query: {id: customerId}})
     },
 
