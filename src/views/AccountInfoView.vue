@@ -1,28 +1,18 @@
 <template>
 
   <div>
-    <table class="table table-hover table-dark">
-      <thead>
-      <tr>
-        <th scope="col">Kontonumber</th>
-        <th scope="col">Kontojääk</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr v-for="account in accounts">
-        <td>{{ account.accountNumber }}</td>
-        <td>{{ account.balance }}</td>
-      </tr>
-      </tbody>
-    </table>
+    <AccountInfoTable :accounts="accounts"/>
 
   </div>
 
 </template>
 
 <script>
+import AccountInfoTable from "@/components/AccountInfoTable";
+
 export default {
   name: 'AccountInfoView',
+  components: {AccountInfoTable},
   data: function () {
     return {
       accounts: {},
@@ -48,6 +38,3 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
