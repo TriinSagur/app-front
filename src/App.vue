@@ -5,6 +5,8 @@
       <router-link to="/new-customer">Add Customers</router-link> |
       <router-link to="/customer">Customer info</router-link> |
       <router-link to="/account-info">Account info</router-link> |
+      <router-link to="/input">Input</router-link> |
+      <router-link to="/output">Output</router-link> |
       <router-link to="/about">About</router-link>
     </nav>
     <router-view/>
