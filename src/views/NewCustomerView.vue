@@ -1,14 +1,18 @@
 <template>
   <div>
 
-    <input type="text" placeholder="Eesnimi" v-model:placeholder="customer.firstName">
+    <input type="text" placeholder="Eesnimi" v-model="customer.firstName">
     <br>
-    <input type="text" placeholder="Perenimi" v-model:placeholder="customer.lastName">
     <br>
-    <input type="text" placeholder="isikukood" v-model:placeholder="customer.isikukood">
+    <input type="text" placeholder="Perekonnanimi" v-model="customer.lastName">
     <br>
-    <button type="submit" v-on:click="addNewCustomer">lisa uus klient</button>
+    <br>
+    <input type="text" placeholder="Isikukood" v-model="customer.isikukood">
+    <br>
+    <br>
+    <button type="submit" v-on:click="addNewCustomer">Lisa uus klient</button>
   </div>
+
 </template>
 
 <script>
@@ -16,21 +20,19 @@ export default {
   name: 'NewCustomerView',
   data: function () {
     return {
-      customer: {
-
-      }
+      customer: {}
     }
   },
   methods: {
-    addNewCustomer: function ()
+    addNewCustomer: function () {
       this.$http.post('/customer', this.customer)
           .then(response => {
             this.customer.id = response.data.id
             alert('Klient lisatud. ID: ' + this.customer.id)
           })
           .catch(error => {
-            alert(error.response.data)
-            console.log(error.response)
+            alert(error.response.data.detail)
+            console.log(error.response.data)
           })
     }
   }
