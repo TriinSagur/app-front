@@ -5,12 +5,11 @@
     <section>
       <h3>vali konto</h3>
       <ul class="list-group">
-        <li class="list-group-item"><input type="radio" v-model="color" value="0">EE123</li>
-        <li class="list-group-item"><input type="radio" v-model="color" value="1">EE456</li>
+        <li class="list-group-item" v-for="account in accounts"><input type="radio" v-model="accountId" :value="account.accountId">{{account.accountNumber}} €{{account.balance}}</li>
       </ul>
 
       <br />
-      <span>value: {{color}}</span>
+      <span>chosen account id: {{ accountId }}</span>
     </section>
 
 
@@ -27,7 +26,7 @@ export default {
     return {
       accounts: {},
       customerId: this.$route.query.id,
-      color: null
+      accountId: null
     }
   },
   methods: {
