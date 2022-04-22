@@ -6,6 +6,11 @@ import BookInfoView from "@/views/BookInfoView";
 import AuthorInfoView from "@/views/AuthorInfoView";
 import NewCustomerView from "@/views/NewCustomerView";
 import RemoveCustomerView from "@/views/RemoveCustomerView";
+import allCustomersView from "@/views/AllCustomersView";
+import accountInfoView from "@/views/AccountInfoView";
+import updateCustomerView from "@/views/UpdateCustomerView";
+import inputPageView from "@/views/InputPageView";
+import outputPageView from "@/views/OutputPageView";
 
 Vue.use(VueRouter)
 
@@ -49,6 +54,31 @@ const routes = [
     path: '/remove-customer',
     name: 'removeCustomerRoute',
     component: RemoveCustomerView
+  },
+  {
+    path: '/all-customer',
+    name: 'allCustomerRoute',
+    component: allCustomersView
+  },
+  {
+    path: '/account-info',
+    name: 'accountRoute',
+    component: accountInfoView
+  },
+  {
+    path: '/update-customer',
+    name: 'updateCustomertRoute',
+    component: updateCustomerView
+  },
+  {
+    path: '/input',
+    name: 'inputRoute',
+    component: inputPageView
+  },
+  {
+    path: '/output',
+    name: 'outputRoute',
+    component: outputPageView
   }
 
 ]

@@ -7,7 +7,12 @@
       <router-link to="/book">BookInfo</router-link> |
       <router-link to="/author">AuthorInfo</router-link> |
       <router-link to="/new-customer">NewCustomer</router-link> |
-      <router-link to="/remove-customer">RemoveCustomer</router-link>
+      <router-link to="/remove-customer">RemoveCustomer</router-link> |
+      <router-link to="/all-customer">AllCustomers</router-link> |
+      <router-link to="/account-info">Account info</router-link> |
+      <router-link to="/update-customer">Update Customer</router-link> |
+      <router-link to="/input">Input</router-link> |
+      <router-link to="/output">Output</router-link>
 
     </nav>
     <router-view/>
