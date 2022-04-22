@@ -52,17 +52,19 @@ export default {
       customer: {},
       customers: {},
       tableDivDisplay: true
-    }
+
+
+    };
   },
   methods: {
 
 
     displayTableDiv: function () {
-      this.tableDivDisplay = true;
+      this.tableDivDisplay = true
     },
 
     hideTableDiv: function () {
-      this.tableDivDisplay = false;
+      this.tableDivDisplay = false
     },
 
     getAllCustomers: function () {

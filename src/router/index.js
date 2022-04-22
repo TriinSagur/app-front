@@ -6,6 +6,7 @@ import NewCustomerView from "@/views/NewCustomerView";
 import AccountInfoView from "@/views/AccountInfoView";
 import InputPageView from "@/views/InputPageView";
 import OutputPageView from "@/views/OutputPageView";
+import TransactionView from "@/views/TransactionView";
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,11 @@ const routes = [
         path: '/output',
         name: 'inputRoute',
         component: OutputPageView
+    },
+    {
+        path: '/transaction',
+        name: 'transactionRoute',
+        component: TransactionView
     },
     {
         path: '/about',
