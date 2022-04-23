@@ -1,7 +1,6 @@
 <template>
   <div>
     <AccountInfoTable :accounts="accounts"/>
-    <br>
 
   </div>
 </template>
@@ -12,7 +11,6 @@ import AccountInfoTable from "@/components/AccountInfoTable";
 export default {
   name: 'AccountInfoView',
   components: {AccountInfoTable},
-
   data: function () {
     return {
       accounts: {},

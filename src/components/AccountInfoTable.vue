@@ -6,12 +6,14 @@
       <th scope="col">kontojääk</th>
     </tr>
     </thead>
+
     <tbody>
     <tr v-for="account in accounts">
       <th>{{ account.accountNumber }}</th>
       <td>{{ account.balance }}</td>
     </tr>
     </tbody>
+
   </table>
 </template>
 <script>

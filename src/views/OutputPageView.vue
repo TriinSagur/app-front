@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{customer}}
+    {{customer.firstName}}
   </div>
 </template>
 
@@ -10,10 +10,13 @@ export default {
   data: function () {
     return {
       customerName: sessionStorage.getItem('firstName'),
-      customer: JSON.parse(sessionStorage.getItem('customer')),
-
+      customer: JSON.parse(sessionStorage.getItem('customer'))
     }
+  },
+  mounted() {
+    this.customer.firstName
   }
+
 }
 </script>
 
