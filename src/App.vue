@@ -4,8 +4,6 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/customer">CustomerInfo</router-link> |
-      <router-link to="/book">BookInfo</router-link> |
-      <router-link to="/author">AuthorInfo</router-link> |
       <router-link to="/new-customer">NewCustomer</router-link> |
       <router-link to="/remove-customer">RemoveCustomer</router-link> |
       <router-link to="/all-customer">AllCustomers</router-link> |

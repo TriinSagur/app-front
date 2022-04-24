@@ -2,8 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import CustomerInfoView from "@/views/CustomerInfoView";
-import BookInfoView from "@/views/BookInfoView";
-import AuthorInfoView from "@/views/AuthorInfoView";
 import NewCustomerView from "@/views/NewCustomerView";
 import RemoveCustomerView from "@/views/RemoveCustomerView";
 import allCustomersView from "@/views/AllCustomersView";
@@ -36,16 +34,7 @@ const routes = [
     name: 'customerRoute',
     component: CustomerInfoView
     },
-  {
-    path: '/book',
-    name: 'bookRoute',
-    component: BookInfoView
-  },
-  {
-    path: '/author',
-    name: 'authorRoute',
-    component: AuthorInfoView
-  },
+
   {
     path: '/new-customer',
     name: 'newCustomerRoute',
