@@ -30,10 +30,19 @@
       <div>
         <h4>{{ firstName }} {{ lastName }}</h4>
 
-        <select v-model="accountId">
-          <option v-for="account in accounts" :value="account.accountId">{{ account.accountNumber }}</option>
-        </select>
-
+        <div class="d-inline-flex p-2">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Saatja konto</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01" v-model="accountId">
+              <option selected v-for="account in accounts" :value="account.accountId">{{
+                  account.accountNumber
+                }}
+              </option>
+            </select>
+          </div>
+        </div>
       </div>
 
 
