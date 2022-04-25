@@ -1,45 +1,54 @@
 <template>
 
+
   <div>
     <h1>Pangatoimingud</h1>
     <br>
-
-
     <div>
-      <section>
-        <h3>Vali konto</h3>
-        <ul class="list-group">
-          <li class="list-group-item" v-for="account in accounts"><input type="radio" v-model="accountId"
-                                                                         :value="account.accountId">
-            {{ account.accountNumber }} EUR {{ account.balance }}
-          </li>
-        </ul>
-      </section>
 
-      <button v-on:click="getStatementByAccountId" type="button" class="btn btn-success m-5">Naita</button>
 
-      <div v-if="statements.length > 0">
-      <table>
-        <tr>
-          <th>Saatja</th>
-          <th>Saaja</th>
-          <th>Summa</th>
-          <th>Kontojaak</th>
-          <th>Aeg</th>
-        </tr>
-        <tr v-for="statement in statements">
-          <td>{{ statement.senderAccountNumber }}</td>
-          <td>{{ statement.receiverAccountNumber }}</td>
-          <td>{{ statement.amount }}</td>
-          <td>{{ statement.balance }}</td>
-          <td>{{ statement.transactionDateTime }}</td>
-        </tr>
-      </table>
+      <div class="d-inline-flex p-2">
+        <section>
+          <h3>Vali konto</h3>
+          <ul class="list-group">
+            <li class="list-group-item" v-for="account in accounts"><input type="radio" v-model="accountId"
+                                                                           :value="account.accountId">
+              {{ account.accountNumber }} : {{ account.balance }} EUR
+            </li>
+          </ul>
+        </section>
       </div>
 
-      <div v-else-if="initialClick">
-        Ei leidnud tulemusi
+
+      <br>
+
+      <button v-on:click="getStatementByAccountId" type="button" class="btn btn-success m-5">Kontovaljavotte</button>
+
+      <button v-on:click="startNewPayment" type="button" class="btn btn-success m-5">Tee ulekannet</button>
+
+      <div>
+        <h4>{{ firstName }} {{ lastName }}</h4>
+
+
+        <div class="d-inline-flex p-2">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Saatja konto</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01" v-model="accountId">
+              <option v-for="account in accounts" :value="account.accountId">{{ account.accountNumber }}
+              </option>
+            </select>
+          </div>
+        </div>
       </div>
+
+
+      <!--      "senderAccountNumber": "string",-->
+      <!--      "receiverAccountNumber": "string",-->
+      <!--      "amount": 1-->
+
+      <StatementTable :initial-click="initialClick" :statements="statements"/>
 
     </div>
   </div>
@@ -47,14 +56,17 @@
 
 <script>
 
-import AccountInfoTable from "@/components/AccountInfoTable";
+import StatementTable from "@/components/StatementTable";
 
 export default {
   name: "TransactionInfoView",
-  components: {AccountInfoTable},
+  components: {StatementTable},
   data: function () {
     return {
       accounts: {},
+      firstName: 'Otto',
+      lastName: 'Triin',
+      selectedAccountId: null,
       customerId: this.$route.query.id,
       accountId: null,
       statements: {},
@@ -88,16 +100,15 @@ export default {
       }).catch(error => {
         console.log(error)
       })
-    }
+    },
+    startNewPayment: function () {
+
+      this.selectedAccountId = this.accountId;
+    },
   },
   mounted() {
     this.findAccountsInfoByCustomerId(1);
-
-
   }
 }
 </script>
 
-<style scoped>
-
-</style>
