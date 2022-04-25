@@ -44,6 +44,3 @@ export default {
 <style scoped>
 
 </style>
-"title": "Isikukood on juba kasutusel",
-"statusCode": 403,
-"detail": "Isikukood 12345678911 on juba kasutusel"
