@@ -27,9 +27,20 @@
       <br>
       <br>
 
+      <!--  SAAJA NIMI  -->
       <div>
-        <h4>{{ firstName }} {{ lastName }}</h4>
+        <div class="d-inline-flex p-2">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Saatja Nimi</label>
+            </div>
+            <input type="text" v-model="senderName">
+          </div>
+        </div>
+      </div>
 
+      <!--  SAATJA    -->
+      <div>
         <div class="d-inline-flex p-2">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -45,12 +56,29 @@
         </div>
       </div>
 
+      <!--  SAAJA KONTO NUMBER    -->
+      <div>
+        <div class="d-inline-flex p-2">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Saatja konto</label>
+            </div>
+            <input type="text" v-model="receiverAccountNumber">
+          </div>
+        </div>
+      </div>
 
-      <!--      {-->
-      <!--      "senderAccountNumber": "string",-->
-      <!--      "receiverAccountNumber": "string",-->
-      <!--      "amount": 1-->
-      <!--      }-->
+      <!--  Summa    -->
+      <div>
+        <div class="d-inline-flex p-2">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Summa</label>
+            </div>
+            <input type="text" placeholder="0" v-model="amount" >
+          </div>
+        </div>
+      </div>
 
       <StatementTable :initial-click="initialClick" :statements="statements"/>
 
@@ -77,7 +105,10 @@ export default {
       customerId: this.$route.query.id,
       accountId: null,
       statements: {},
-      initialClick: false
+      initialClick: false,
+      receiverAccountNumber: '',
+      senderName: 'Otto Triin',
+      amount: null
     }
   },
 
