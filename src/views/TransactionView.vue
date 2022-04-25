@@ -4,44 +4,19 @@
     <div>
 
       <!--  ACCOUNTS RADIO button    -->
-      <section>
-        <h3>vali konto</h3>
-        <ul class="list-group">
-          <li class="list-group-item" v-for="account in accounts">
-            <input type="radio" v-model="accountId" :value="account.accountId">{{ account.accountNumber }}
-            €{{ account.balance }}
-          </li>
-        </ul>
-      </section>
+      <AccountSelectionRadio :account-id="accountId" :accounts="accounts"/>
 
       <button v-on:click="getStatementByAccountId" type="button" class="btn btn-outline-success m-3">Kuva
         kontoväljavõtet
       </button>
 
+      <button v-on:click="getStatementByAccountId" type="button" class="btn btn-outline-success m-3">
+        Alusta ülekannet
+      </button>
+
 
       <!--  STATEMENTS TABEL    -->
-      <div v-if="statements.length  > 0">
-        <table>
-          <tr>
-            <th>Saatja</th>
-            <th>Saaja</th>
-            <th>Summa</th>
-            <th>Jääk</th>
-            <th>Aeg</th>
-          </tr>
-          <tr v-for="statement in statements">
-            <td>{{ statement.senderAccountNumber }}</td>
-            <td>{{ statement.receiverAccountNumber }}</td>
-            <td>{{ statement.amount }}</td>
-            <td>{{ statement.balance }}</td>
-            <td>{{ statement.transactionDateTime }}</td>
-          </tr>
-        </table>
-      </div>
-      <div v-else-if="initialClick">
-        Ei leidnud tulemusi
-      </div>
-
+      <StatementTable :initial-click="initialClick" :statements="statements"/>
 
 
     </div>
@@ -51,11 +26,12 @@
 </template>
 
 <script>
-import AccountInfoTable from "@/components/AccountInfoTable";
+import StatementTable from "@/components/StatementTable";
+import AccountSelectionRadio from "@/components/AccountSelectionRadio";
 
 export default {
   name: 'TransactionView',
-  components: {AccountInfoTable},
+  components: {AccountSelectionRadio, StatementTable},
 
   data: function () {
     return {
@@ -102,6 +78,3 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
