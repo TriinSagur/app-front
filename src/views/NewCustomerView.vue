@@ -11,9 +11,8 @@
     <br>
     <br>
     <button type="submit" v-on:click="addNewCustomer">Lisa uus klient</button>
-
-
   </div>
+
 </template>
 
 <script>
@@ -28,21 +27,17 @@ export default {
     addNewCustomer: function () {
       this.$http.post('/customer', this.customer)
           .then(response => {
-            this.id = response.data.id
+            this.customer.id = response.data.id
             alert('Klient lisatud. ID: ' + this.customer.id)
           })
           .catch(error => {
             alert(error.response.data.detail)
             console.log(error.response.data)
           })
-
-
     }
-
   }
 }
 </script>
-
 
 <style scoped>
 
