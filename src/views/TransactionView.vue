@@ -3,7 +3,6 @@
     <h1>Pangatoimingud</h1>
     <div>
 
-      <!--  ACCOUNTS RADIO button    -->
       <section>
         <h3>vali konto</h3>
         <ul class="list-group">
@@ -14,34 +13,35 @@
         </ul>
       </section>
 
-      <button v-on:click="getStatementByAccountId" type="button" class="btn btn-outline-success m-3">Kuva
-        kontoväljavõtet
+
+      <button v-on:click="getStatementByAccountId" type="button" class="btn btn-outline-success m-3">
+        Kuva kontoväljavõtet
       </button>
 
+      <button v-on:click="startNewPayment" type="button" class="btn btn-outline-success m-3">
+        Alusta ülekannet
+      </button>
+      <br>
+      <br>
 
-      <!--  STATEMENTS TABEL    -->
-      <div v-if="statements.length  > 0">
-        <table>
-          <tr>
-            <th>Saatja</th>
-            <th>Saaja</th>
-            <th>Summa</th>
-            <th>Jääk</th>
-            <th>Aeg</th>
-          </tr>
-          <tr v-for="statement in statements">
-            <td>{{ statement.senderAccountNumber }}</td>
-            <td>{{ statement.receiverAccountNumber }}</td>
-            <td>{{ statement.amount }}</td>
-            <td>{{ statement.balance }}</td>
-            <td>{{ statement.transactionDateTime }}</td>
-          </tr>
-        </table>
+      <div>
+        <h4>{{ firstName }} {{ lastName }}</h4>
+
+
+        <select v-model="selectedAccountId">
+          <option v-for="account in accounts" :value="account.accountId">{{ account.accountNumber }}</option>
+        </select>
+
       </div>
-      <div v-else-if="initialClick">
-        Ei leidnud tulemusi
-      </div>
-      
+
+
+      <!--      {-->
+      <!--      "senderAccountNumber": "string",-->
+      <!--      "receiverAccountNumber": "string",-->
+      <!--      "amount": 1-->
+      <!--      }-->
+
+      <StatementTable :initial-click="initialClick" :statements="statements"/>
 
 
     </div>
@@ -51,15 +51,19 @@
 </template>
 
 <script>
-import AccountInfoTable from "@/components/AccountInfoTable";
+import StatementTable from "@/components/StatementTable";
+import AccountSelectionRadio from "@/components/AccountSelectionRadio";
 
 export default {
   name: 'TransactionView',
-  components: {AccountInfoTable},
+  components: {AccountSelectionRadio, StatementTable},
 
   data: function () {
     return {
       accounts: {},
+      firstName: 'Otto',
+      lastName: 'Triin',
+      selectedAccountId: null,
       customerId: this.$route.query.id,
       accountId: null,
       statements: {},
@@ -77,6 +81,7 @@ export default {
           .then(response => {
             this.accounts = response.data
             this.accountId = this.accounts[0].accountId
+            this.selectedAccountId = this.accountId
           })
           .catch(error => console.log(error.response.data))
     },
@@ -93,6 +98,11 @@ export default {
       }).catch(error => {
         console.log(error)
       })
+    },
+    startNewPayment: function () {
+      console.log('selectedAccountId= ' + this.selectedAccountId)
+      console.log('this.accountId= ' + this.accountId)
+      this.selectedAccountId = this.accountId
     }
   },
 
@@ -102,6 +112,3 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
