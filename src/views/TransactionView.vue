@@ -13,7 +13,6 @@
         </ul>
       </section>
 
-
       <button v-on:click="getStatementByAccountId" type="button" class="btn btn-outline-success m-3">
         Kuva kontoväljavõtet
       </button>
@@ -23,6 +22,8 @@
       </button>
       <br>
       <br>
+
+
 
       <div>
         <h4>{{ firstName }} {{ lastName }}</h4>
@@ -52,11 +53,10 @@
 
 <script>
 import StatementTable from "@/components/StatementTable";
-import AccountSelectionRadio from "@/components/AccountSelectionRadio";
 
 export default {
   name: 'TransactionView',
-  components: {AccountSelectionRadio, StatementTable},
+  components: {StatementTable},
 
   data: function () {
     return {
