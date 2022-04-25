@@ -17,6 +17,14 @@
     <br>
     <button type="submit" class="btn btn-outline-success m-3" v-on:click="addNewCustomer">Lisa uus klient</button>
     <button v-on:click="addNewCustomerPicture" type="button" class="btn btn-outline-success m-3">Lisa pilt</button>
+    <button v-on:click="getAllPictures" type="button" class="btn btn-outline-success m-3">Kuva pilte</button>
+
+    <div v-for="picture in pictures" class="img-fluid">
+      <label>{{picture.title}}</label>
+      <img :src="picture.data">
+    </div>
+
+
 
   </div>
 
@@ -28,7 +36,8 @@ export default {
   data: function () {
     return {
       customer: {},
-      pictureExport: {}
+      pictureExport: {},
+      pictures: {}
     }
   },
   methods: {
@@ -71,11 +80,24 @@ export default {
       }).catch(error => {
         console.log(error)
       })
+    },
+    getAllPictures: function () {
+      this.$http.get("/picture/all")
+          .then(response => {
+            this.pictures = response.data
+            console.log(response.data)
+          }).catch(error => {
+        console.log(error)
+      })
     }
+
   }
 }
 </script>
 
 <style scoped>
-
+img {
+  width: 100vw;
+  height: auto;
+}
 </style>
