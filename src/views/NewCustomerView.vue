@@ -10,6 +10,11 @@
     <input type="text" placeholder="Isikukood" v-model="customer.isikukood">
     <br>
     <br>
+
+    <input type="file" accept="image/x-png,image/jpeg" >
+
+    <br>
+    <br>
     <button type="submit" v-on:click="addNewCustomer">Lisa uus klient</button>
   </div>
 
@@ -24,6 +29,25 @@ export default {
     }
   },
   methods: {
+    handleImage(event) {
+      this.displayInputPicture = true
+      this.displayUploadPictureDetailsOptions = true
+
+      const selectedImage = event.target.files[0];
+      this.createBase64Image(selectedImage);
+    },
+
+    createBase64Image(fileObject) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.pictureExport.data = reader.result;
+      };
+      reader.onerror = function (error) {
+        alert(error);
+      }
+      reader.readAsDataURL(fileObject);
+    }
+    ,
     addNewCustomer: function () {
       this.$http.post('/customer', this.customer)
           .then(response => {
