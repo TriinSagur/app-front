@@ -1,66 +1,121 @@
 <template>
-
-
   <div>
     <h1>Pangatoimingud</h1>
-    <br>
-    <div>
 
+    <div v-if="accountActionsDiv">
 
       <div class="d-inline-flex p-2">
         <section>
-          <h3>Vali konto</h3>
+          <h3>vali konto</h3>
           <ul class="list-group">
-            <li class="list-group-item" v-for="account in accounts"><input type="radio" v-model="accountId"
-                                                                           :value="account.accountId">
-              {{ account.accountNumber }} : {{ account.balance }} EUR
+            <li class="list-group-item" v-for="account in accounts">
+              <input type="radio" v-model="accountId" :value="account.accountId">{{ account.accountNumber }}
+              €{{ account.balance }}
             </li>
           </ul>
         </section>
       </div>
 
-
       <br>
+      <button v-on:click="getStatementByAccountId" type="button" class="btn btn-outline-success m-3">
+        Kuva kontoväljavõtet
+      </button>
 
-      <button v-on:click="getStatementByAccountId" type="button" class="btn btn-success m-5">Kontovaljavotte</button>
+      <button v-on:click="startNewPayment" type="button" class="btn btn-outline-success m-3">
+        Alusta ülekannet
+      </button>
+      <br>
+      <br>
+    </div>
 
-      <button v-on:click="startNewPayment" type="button" class="btn btn-success m-5">Tee ulekannet</button>
+    <div v-if="transferActionsDiv">
 
+      <!--  SAAJA NIMI  -->
       <div>
-        <h4>{{ firstName }} {{ lastName }}</h4>
+        <div class="d-inline-flex p-2">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Saatja Nimi</label>
+            </div>
+            <input type="text" v-model="senderName">
+          </div>
+        </div>
+      </div>
 
-
+      <!--  SAATJA    -->
+      <div>
         <div class="d-inline-flex p-2">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <label class="input-group-text" for="inputGroupSelect01">Saatja konto</label>
             </div>
             <select class="custom-select" id="inputGroupSelect01" v-model="accountId">
-              <option v-for="account in accounts" :value="account.accountId">{{ account.accountNumber }}
+              <option selected v-for="account in accounts" :value="account.accountId">{{
+                  account.accountNumber
+                }}
               </option>
             </select>
           </div>
         </div>
       </div>
 
+      <!--  SAAJA KONTO NUMBER    -->
+      <div>
+        <div class="d-inline-flex p-2">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Saatja konto</label>
+            </div>
+            <input type="text" v-model="receiverAccountNumber">
+          </div>
+        </div>
+      </div>
 
-      <!--      "senderAccountNumber": "string",-->
-      <!--      "receiverAccountNumber": "string",-->
-      <!--      "amount": 1-->
+      <!--  Summa    -->
+      <div>
+        <div class="d-inline-flex p-2">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Summa</label>
+            </div>
+            <input type="number" placeholder="0" v-model="amount">
+          </div>
+        </div>
+      </div>
 
-      <StatementTable :initial-click="initialClick" :statements="statements"/>
+      <br>
+      <button v-on:click="backToAccountActions" type="button" class="btn btn-outline-success m-3">
+        Tagasi
+      </button>
+
+      <button v-on:click="startNewPayment" type="button" class="btn btn-outline-success m-3">
+        Teosta makse
+      </button>
+      <br>
 
     </div>
+
+    <!--  KONTOVÄLJAVÕTE    -->
+    <div v-if="statementDiv">
+      <button v-on:click="backToAccountActions" type="button" class="btn btn-outline-success m-3">
+        Tagasi
+      </button>
+      <StatementTable :initial-click="initialClick" :statements="statements" />
+    </div>
+
+
   </div>
+
+
 </template>
 
 <script>
-
 import StatementTable from "@/components/StatementTable";
 
 export default {
-  name: "TransactionInfoView",
+  name: 'TransactionView',
   components: {StatementTable},
+
   data: function () {
     return {
       accounts: {},
@@ -70,44 +125,71 @@ export default {
       customerId: this.$route.query.id,
       accountId: null,
       statements: {},
-      initialClick: false
+      initialClick: false,
+      receiverAccountNumber: '',
+      senderName: 'Otto Triin',
+      amount: null,
+      accountActionsDiv: true,
+      transferActionsDiv: false,
+      statementDiv: false
     }
   },
-  methods: {
-    findAccountsInfoByCustomerId: function (customerId) {
 
+  methods: {
+    hideAllDivs: function () {
+      this.accountActionsDiv = false
+      this.transferActionsDiv= false
+      this.statementDiv= false
+    },
+    backToAccountActions: function () {
+      this.hideAllDivs()
+      this.accountActionsDiv = true
+      this.receiverAccountNumber = null
+      this.amount = null
+    },
+
+
+
+    findAccountsInfoByCustomerId: function (id) {
       this.$http.get('/account/customer-id', {
         params: {
-          id: customerId
+          id: id
         }
       })
           .then(response => {
             this.accounts = response.data
             this.accountId = this.accounts[0].accountId
+            this.selectedAccountId = this.accountId
           })
           .catch(error => console.log(error.response.data))
     },
-
-    getStatementByAccountId: function (id) {
+    getStatementByAccountId: function () {
       this.$http.get("/statement/account-id", {
             params: {
               accountId: this.accountId
             }
           }
       ).then(response => {
-        this.initialClick = true;
+        this.hideAllDivs()
+        this.statementDiv = true
+        this.initialClick = true
         this.statements = response.data.statements
+        console.log(response.data)
       }).catch(error => {
         console.log(error)
       })
     },
     startNewPayment: function () {
-
-      this.selectedAccountId = this.accountId;
-    },
+      this.hideAllDivs()
+      this.transferActionsDiv= true
+      console.log('selectedAccountId= ' + this.selectedAccountId)
+      console.log('this.accountId= ' + this.accountId)
+      this.selectedAccountId = this.accountId
+    }
   },
+
   mounted() {
-    this.findAccountsInfoByCustomerId(1);
+    this.findAccountsInfoByCustomerId(1)
   }
 }
 </script>
