@@ -16,9 +16,9 @@ export default {
       accounts: {},
       customerId: this.$route.query.id
     }
-  }, methods: {
+  },
+  methods: {
     findAccountsInfoByCustomerId: function (id) {
-
       this.$http.get('/account/customer-id', {
         params: {
           id: id

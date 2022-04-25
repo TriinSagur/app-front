@@ -9,7 +9,22 @@
     <input type="text" placeholder="Isikukood" v-model="customer.isikukood">
     <br>
     <br>
+
+    <input type="file" @change="handleImage" accept="image/x-png,image/jpeg">
+    <br>
+    <br>
+    <br>
     <button type="submit" v-on:click="addNewCustomer">Lisa uus klient</button>
+    <button  v-on:click="addNewCustomerPicture">Lisa uus pilt</button>
+    <button  v-on:click="getAllPictures">Näita pilte</button>
+
+    <div v-for="picture in pictures" class="img-fluid" alt="Responsive image">
+      <label>
+        {{picture.title}}
+      </label>
+      <img :src="picture.data" alt="">
+
+    </div>
   </div>
 </template>
 
@@ -19,10 +34,34 @@ export default {
   data: function () {
     return {
 
-      customer: {}
+      customer: {},
+      pictureExport: {},
+      pictures: {}
+
     }
   },
   methods: {
+    handleImage(event) {
+      // this.displayInputPicture = true
+      // this.displayUploadPictureDetailsOptions = true
+
+      const selectedImage = event.target.files[0];
+      this.createBase64Image(selectedImage);
+    },
+
+    createBase64Image(fileObject) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.pictureExport.data = reader.result;
+        console.log(this.pictureExport.data)
+      };
+      reader.onerror = function (error) {
+        alert(error);
+      }
+      reader.readAsDataURL(fileObject);
+    }
+    ,
+
     addNewCustomer: function () {
       this.$http.post('/customer', this.customer)
           .then(response => {
@@ -36,6 +75,28 @@ export default {
             console.log(error)
           })
     },
+
+    addNewCustomerPicture: function () {
+
+        this.$http.post("/picture/in", this.pictureExport
+        ).then(response => {
+          console.log(response.data)
+        }).catch(error => {
+          console.log(error)
+        })
+
+    },
+
+    getAllPictures: function () {
+      this.$http.get("/picture/all")
+          .then(response => {
+            this.pictures = response.data
+            console.log(response.data)
+          }).catch(error => {
+        console.log(error)
+      })
+    }
+
   }
 }
 </script>
