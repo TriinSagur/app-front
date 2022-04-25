@@ -28,7 +28,10 @@ export default {
             this.customer = response.data
             alert('Klient ID-ga ' + this.customerId +' eemaldatud')
           })
-          .catch(error => console.log(error))
+          .catch(error => {
+            alert('Klienti sellise ID-ga puudub')
+           console.log(error)}
+          )
     }
   }
 }
