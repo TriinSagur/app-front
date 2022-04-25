@@ -2,6 +2,10 @@
   <div>
     <h1>Pangatoimingud</h1>
 
+    <div v-if="successMessage.length > 0" class="alert alert-success" role="alert">
+      {{ successMessage }}
+    </div>
+
     <div v-if="accountActionsDiv">
 
       <div class="d-inline-flex p-2">
@@ -37,7 +41,7 @@
             <div class="input-group-prepend">
               <label class="input-group-text" for="inputGroupSelect01">Saatja Nimi</label>
             </div>
-            <input type="text" v-model="senderName">
+            <input type="text" disabled v-model="senderName">
           </div>
         </div>
       </div>
@@ -64,7 +68,7 @@
         <div class="d-inline-flex p-2">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <label class="input-group-text" for="inputGroupSelect01">Saatja konto</label>
+              <label class="input-group-text" for="inputGroupSelect01">Saaja konto</label>
             </div>
             <input type="text" v-model="receiverAccountNumber">
           </div>
@@ -83,24 +87,27 @@
         </div>
       </div>
 
+
+
+
       <br>
       <button v-on:click="backToAccountActions" type="button" class="btn btn-outline-success m-3">
         Tagasi
       </button>
 
-      <button v-on:click="startNewPayment" type="button" class="btn btn-outline-success m-3">
+      <button v-on:click="sendMoney" type="button" class="btn btn-outline-success m-3">
         Teosta makse
       </button>
       <br>
 
     </div>
 
-    <!--  KONTOVÄLJAVÕTE    -->
+    <!--  KONTO VÄLJAVÕTE  -->
     <div v-if="statementDiv">
       <button v-on:click="backToAccountActions" type="button" class="btn btn-outline-success m-3">
         Tagasi
       </button>
-      <StatementTable :initial-click="initialClick" :statements="statements" />
+      <StatementTable :initial-click="initialClick" :statements="statements"/>
     </div>
 
 
@@ -126,30 +133,33 @@ export default {
       accountId: null,
       statements: {},
       initialClick: false,
-      receiverAccountNumber: '',
       senderName: 'Otto Triin',
+      senderAccountId: null,
+      receiverAccountNumber: '',
       amount: null,
       accountActionsDiv: true,
       transferActionsDiv: false,
-      statementDiv: false
-    }
+      statementDiv: false,
+      successMessage: ''
+
+    };
   },
 
   methods: {
     hideAllDivs: function () {
+      this.successMessage = ''
       this.accountActionsDiv = false
-      this.transferActionsDiv= false
-      this.statementDiv= false
+      this.transferActionsDiv = false
+      this.statementDiv = false
     },
     backToAccountActions: function () {
       this.hideAllDivs()
       this.accountActionsDiv = true
       this.receiverAccountNumber = null
       this.amount = null
-    },
 
-
-
+    }
+    ,
     findAccountsInfoByCustomerId: function (id) {
       this.$http.get('/account/customer-id', {
         params: {
@@ -163,6 +173,25 @@ export default {
           })
           .catch(error => console.log(error.response.data))
     },
+    sendMoney: function () {
+      let transferRequest = {
+        senderAccountId: this.accountId,
+        receiverAccountNumber: this.receiverAccountNumber,
+        amount: this.amount
+      }
+
+      this.$http.post("/bank/out", transferRequest
+      ).then(response => {
+        this.hideAllDivs()
+        this.successMessage = 'Ülekanne õnnestus, tehingu ID: ' + response.data.referenceNumber
+        this.accountActionsDiv = true
+
+      }).catch(error => {
+        console.log(error)
+      })
+    }
+    ,
+
     getStatementByAccountId: function () {
       this.$http.get("/statement/account-id", {
             params: {
@@ -181,9 +210,7 @@ export default {
     },
     startNewPayment: function () {
       this.hideAllDivs()
-      this.transferActionsDiv= true
-      console.log('selectedAccountId= ' + this.selectedAccountId)
-      console.log('this.accountId= ' + this.accountId)
+      this.transferActionsDiv = true
       this.selectedAccountId = this.accountId
     }
   },
