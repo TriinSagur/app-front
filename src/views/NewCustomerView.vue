@@ -11,11 +11,13 @@
     <br>
     <br>
 
-    <input type="file" accept="image/x-png,image/jpeg" >
+    <input type="file" @change="handleImage" accept="image/x-png,image/jpeg" >
 
     <br>
     <br>
-    <button type="submit" v-on:click="addNewCustomer">Lisa uus klient</button>
+    <button type="submit" class="btn btn-outline-success m-3" v-on:click="addNewCustomer">Lisa uus klient</button>
+    <button v-on:click="addNewCustomerPicture" type="button" class="btn btn-outline-success m-3">Lisa pilt</button>
+
   </div>
 
 </template>
@@ -25,13 +27,14 @@ export default {
   name: 'NewCustomerView',
   data: function () {
     return {
-      customer: {}
+      customer: {},
+      pictureExport: {}
     }
   },
   methods: {
     handleImage(event) {
-      this.displayInputPicture = true
-      this.displayUploadPictureDetailsOptions = true
+      // this.displayInputPicture = true
+      // this.displayUploadPictureDetailsOptions = true
 
       const selectedImage = event.target.files[0];
       this.createBase64Image(selectedImage);
@@ -41,6 +44,7 @@ export default {
       const reader = new FileReader();
       reader.onload = () => {
         this.pictureExport.data = reader.result;
+        console.log(this.pictureExport.data)
       };
       reader.onerror = function (error) {
         alert(error);
@@ -58,6 +62,15 @@ export default {
             alert(error.response.data.detail)
             console.log(error.response.data)
           })
+    },
+    addNewCustomerPicture: function () {
+
+      this.$http.post("/picture/in", this.pictureExport
+      ).then(response => {
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
 }
