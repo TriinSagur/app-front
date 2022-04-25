@@ -169,6 +169,8 @@ export default {
         }
       })
           .then(response => {
+            this.hideAllDivs()
+            this.statementDiv=true
             this.accounts = response.data
             this.accountId = this.accounts[0].accountId
             this.selectedAccountId = this.accountId
