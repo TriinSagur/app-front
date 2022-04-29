@@ -27,11 +27,27 @@
           <td>{{ customer.firstName }}</td>
           <td>{{ customer.lastName }}</td>
           <td>{{ customer.isikukood }}</td>
+          <td>
+            <input  v-on:input ="horses.push(customer.id)" type="checkbox" name="" id="">
+          </td>
           <td><button v-on:click="navigateToAccountsInfo(customer.id)" type="button" class="btn btn-secondary btn-lg">Konto</button></td>
         </tr>
         </tbody>
 
+
+
       </table>
+
+                <td><button v-on:click="saveDataToSessionStorage" type="button" class="btn btn-secondary btn-lg">edasta</button></td>
+                <td><button v-on:click="getAllCustomers" type="button" class="btn btn-secondary btn-lg">all</button></td>
+                <td><button v-on:click="updCust" type="button" class="btn btn-secondary btn-lg">upd</button></td>
+
+      <br>
+      <br>
+{{horses}}
+      {{horse}}
+      {{raceHorses}}
+
     </div>
 
   </div>
@@ -50,10 +66,21 @@ export default {
       customerId: 0,
       customer: {},
       customers: {},
-      tableDivDisplay: true
+      tableDivDisplay: true,
+      horses: [],
+      horse: {},
+      raceHorses: {}
     }
   },
   methods: {
+
+    saveDataToSessionStorage: function (key, value) {
+
+      sessionStorage.setItem('horses', JSON.stringify(this.horses))
+
+
+
+    },
 
     hideTableDiv: function () {
       this.tableDivDisplay = false
@@ -85,12 +112,26 @@ export default {
       this.$router.push({name: 'accountRoute', query: {id: customerId} })
     },
 
-  },
+
+    updCust: function () {
+
+      let raceHorses = {
+        horses: this.horses
+      }
+            this.$http.post('customer/upd', raceHorses
+    ).then(response => {
+      alert("Hello")
+        this.horse = response.data
+        console.log(response.data)
+      }).catch(error => console.log(error))
+    },
+
   mounted() {
     this.getAllCustomers()
 
   }
 }
+ }
 
 </script>
 

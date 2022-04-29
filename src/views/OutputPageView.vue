@@ -3,6 +3,8 @@
   <div>
 <!--    {{ customerName }}-->
     {{ customer.firstName }}
+    {{horses}}
+    {{horses1}}
 
 
   </div>
@@ -15,7 +17,9 @@ export default {
   data: function () {
     return {
       customerName: sessionStorage.getItem('firstName'),
+      horses: sessionStorage.getItem('horses'),
       customer: JSON.parse(sessionStorage.getItem('customer')),
+      horses1: JSON.parse(sessionStorage.getItem('horses')),
     }
   },
 
