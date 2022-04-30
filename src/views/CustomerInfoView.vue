@@ -28,7 +28,7 @@
           <td>{{ customer.lastName }}</td>
           <td>{{ customer.isikukood }}</td>
           <td>
-            <input  v-on:input ="horses.push(customer.id)" type="checkbox" name="" id="">
+            <input  v-on:input ="horsesId.push(customer.id)" type="checkbox" name="" id="">
           </td>
           <td><button v-on:click="navigateToAccountsInfo(customer.id)" type="button" class="btn btn-secondary btn-lg">Konto</button></td>
         </tr>
@@ -44,9 +44,10 @@
 
       <br>
       <br>
-{{horses}}
+
+      {{horsesId}}
       {{horse}}
-      {{raceHorses}}
+<!--      {{raceHorses}}-->
 
     </div>
 
@@ -67,9 +68,9 @@ export default {
       customer: {},
       customers: {},
       tableDivDisplay: true,
-      horses: [],
+      horsesId: [],
       horse: {},
-      raceHorses: {}
+      // raceHorses: {}
     }
   },
   methods: {
@@ -115,10 +116,11 @@ export default {
 
     updCust: function () {
 
-      let raceHorses = {
-        horses: this.horses
+      let Test = {
+        horses : this.horsesId,
+
       }
-            this.$http.post('customer/upd', raceHorses
+            this.$http.post('customer/upd', Test
     ).then(response => {
       alert("Hello")
         this.horse = response.data
