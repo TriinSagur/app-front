@@ -1,6 +1,7 @@
 <template>
   <div>
 
+
     <button v-on:click="hideTableDiv" type="button" class="btn btn-danger">Peida</button>
     <button v-on:click="displayTableDiv" type="button" class="btn btn-success m-3">Näita</button>
     <br>
